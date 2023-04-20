@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springmvc.dao.StaffDao">
+
+    <resultMap id="staffResultMap" type="com.example.springmvc.pojo.Staff">
+        <id property="id" column="id"/>
+        <result property="gmtCreate" column="gmt_create"/>
+        <result property="gmtModified" column="gmt_modified"/>
+        <result property="staffId" column="staff_id"/>
+        <result property="staffName" column="staff_name"/>
+        <result property="age" column="staff_age"/>
+        <result property="sex" column="sex"/>
+        <result property="birthday" column="birthday"/>
+        <result property="phone" column="staff_phone"/>
+        <result property="department" column="department"/>
+        <result property="position" column="position"/>
+        <result property="salary" column="staff_salary"/>
+        <result property="entryTime" column="entrytime"/>
+        <result property="leaveTime" column="leavetime"/>
+    </resultMap>
+
+
+
+    <sql id="allColumns">
+        staff_id,staff_name,
+        staff_age,sex,birthday,staff_phone,department,position,staff_salary,entrytime,leavetime
+    </sql>
+
+    <select id="getByStaffId" parameterType="int" resultMap="staffResultMap">
+        select staff_id,staff_name,
+               staff_age,sex,birthday,staff_phone,department,position,staff_salary,entrytime,leavetime
+        from support_staff
+        where staff_id = #{staffId}
+    </select>
+
+    <select id="getAllStaff" resultMap="staffResultMap">
+        select staff_id,staff_name,
+               staff_age,sex,birthday,staff_phone,department,position,staff_salary,entrytime,leavetime
+        from support_staff
+    </select>
+
+    <select id="getByStaffName" parameterType="String" resultMap="staffResultMap">
+        select staff_id,staff_name,
+               staff_age,sex,birthday,staff_phone,department,position,staff_salary,entrytime,leavetime
+        from support_staff
+        where staff_name = #{staffName}
+    </select>
+
+    <select id="getByDepartment" parameterType="String" resultMap="staffResultMap">
+        select staff_id,staff_name,
+               staff_age,sex,birthday,staff_phone,department,position,staff_salary,entrytime,leavetime
+        from support_staff
+        where department = #{department}
+    </select>
+
+
+    <insert id="insertStaff"  parameterType="staff">
+        insert into support_staff (gmt_create, gmt_modified, staff_id, staff_name, staff_age, sex, birthday,
+        staff_phone, department, position, staff_salary, entrytime)
+         values (#{gmtCreate},#{gmtModified},#{staffId},
+        #{staffName},#{age},#{sex},
+        #{birthday},#{phone},#{department},
+        #{position},#{salary},#{entryTime});
+        <selectKey keyProperty="id" resultType="int" order="AFTER">
+            select last_insert_id()
+        </selectKey>
+    </insert>
+
+
+
+    <update id="updateStaff" parameterType="staff">
+        update support_staff
+        set gmt_modified=#{gmtModified},
+            staff_id =#{staffId},
+            staff_name = #{staffName},staff_age = #{age},sex = #{sex},
+            birthday = #{birthday},staff_phone = #{phone},department = #{department},
+            position = #{position},staff_salary=#{salary},entrytime = #{entryTime}
+            where staff_id =#{staffId}
+    </update>
+
+
+
+    <delete id="deleteStaff" parameterType="int">
+        delete
+        from support_staff
+        where  staff_id =#{staffId}
+    </delete>
+
+</mapper>

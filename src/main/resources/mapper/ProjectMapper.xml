@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springmvc.dao.ProjectDao">
+
+    <resultMap id="projectResultMap" type="com.example.springmvc.pojo.Project">
+        <id property="id" column="id"/>
+        <result property="gmtCreate" column="gmt_create"/>
+        <result property="gmtModified" column="gmt_modified"/>
+        <result property="projectId" column="project_id" />
+        <result property="projectName" column="project_name" />
+        <result property="info" column="project_info" />
+        <result property="beginTime" column="project_begin_time" />
+        <result property="endTime" column="project_end_time" />
+        <result property="status" column="project_status" />
+        <result property="importance" column="project_importance" />
+        <result property="contractAmount" column="project_contract_amount" />
+        <result property="progressValue" column="project_progress" />
+    </resultMap>
+
+    <select id="getProjectById" parameterType="int" resultMap="projectResultMap">
+        select project_id,project_name,project_info,project_begin_time,
+               project_end_time,project_status,project_importance,
+               project_contract_amount,project_progress
+        from support_project
+        where project_id = #{projectId}
+    </select>
+
+
+</mapper>
