@@ -35,28 +35,8 @@
         support_weight
         from support_staff_join_project
         where staff_id = #{staffId}
-        and ( #{endTime} >= support_begin_time and support_end_time >= #{beginTime})
-    </select>
-    
-    <select id="getAllStaffByProjectId" parameterType="int" resultMap="staffJoinProjectResultMap">
-        select staff_id,
-               project_id,
-               support_begin_time,
-               support_end_time,
-               support_weight
-        from support_staff_join_project
-        where project_id = #{projectId}
-    </select>
-    
-    <select id="getStaffByTime" resultMap="staffJoinProjectResultMap">
-        select staff_id,
-               project_id,
-               support_begin_time,
-               support_end_time,
-               support_weight
-        from support_staff_join_project
-        where project_id = #{projectId}
-          and ( #{endTime} >= support_begin_time and support_end_time >= #{beginTime})
+        and  #{beginTime} >= support_begin_time
+        and support_end_time >= #{endTime}
     </select>
 
 </mapper>
