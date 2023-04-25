@@ -28,7 +28,7 @@ public class StaffServiceImpl implements StaffService{
     }
 
     @Override
-    public Staff getByStaffName(String staffName) {
+    public List<Staff> getByStaffName(String staffName) {
         return staffdao.getByStaffName(staffName);
     }
 

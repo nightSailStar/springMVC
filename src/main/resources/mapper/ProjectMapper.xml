@@ -8,24 +8,103 @@
         <id property="id" column="id"/>
         <result property="gmtCreate" column="gmt_create"/>
         <result property="gmtModified" column="gmt_modified"/>
-        <result property="projectId" column="project_id" />
-        <result property="projectName" column="project_name" />
-        <result property="info" column="project_info" />
-        <result property="beginTime" column="project_begin_time" />
-        <result property="endTime" column="project_end_time" />
-        <result property="status" column="project_status" />
-        <result property="importance" column="project_importance" />
-        <result property="contractAmount" column="project_contract_amount" />
-        <result property="progressValue" column="project_progress" />
+        <result property="projectId" column="project_id"/>
+        <result property="projectName" column="project_name"/>
+        <result property="info" column="project_info"/>
+        <result property="beginTime" column="project_begin_time"/>
+        <result property="endTime" column="project_end_time"/>
+        <result property="status" column="project_status"/>
+        <result property="importance" column="project_importance"/>
+        <result property="contractAmount" column="project_contract_amount"/>
+        <result property="progressValue" column="project_progress"/>
     </resultMap>
 
     <select id="getProjectById" parameterType="int" resultMap="projectResultMap">
-        select project_id,project_name,project_info,project_begin_time,
-               project_end_time,project_status,project_importance,
-               project_contract_amount,project_progress
+        select project_id,
+               project_name,
+               project_info,
+               project_begin_time,
+               project_end_time,
+               project_status,
+               project_importance,
+               project_contract_amount,
+               project_progress
         from support_project
         where project_id = #{projectId}
     </select>
 
+
+    <select id="getProjectByName" parameterType="String" resultMap="projectResultMap">
+        select project_id,
+               project_name,
+               project_info,
+               project_begin_time,
+               project_end_time,
+               project_status,
+               project_importance,
+               project_contract_amount,
+               project_progress
+        from support_project
+        where project_name  like concat('%', #{projectName},'%')
+    </select>
+
+
+    <select id="getAllProject" resultMap="projectResultMap">
+        select project_id,
+               project_name,
+               project_info,
+               project_begin_time,
+               project_end_time,
+               project_status,
+               project_importance,
+               project_contract_amount,
+               project_progress
+        from support_project
+    </select>
+
+    <select id="getProjectByStatus" resultMap="projectResultMap">
+        select project_id,
+               project_name,
+               project_info,
+               project_begin_time,
+               project_end_time,
+               project_status,
+               project_importance,
+               project_contract_amount,
+               project_progress
+        from support_project
+        where project_status = #{status}
+    </select>
+
+    <insert id="insertProject" parameterType="project">
+        insert into support_project(gmt_create, gmt_modified, project_id, project_name,
+                                    project_info, project_begin_time, project_end_time,
+                                    project_status, project_importance, project_contract_amount, project_progress)
+        values (#{gmtCreate}, #{gmtModified}, #{projectId}, #{projectName},
+                #{info}, #{beginTime}, #{endTime},
+                #{status}, #{importance}, #{contractAmount}, #{progressValue})
+    </insert>
+
+    <update id="updateProject" parameterType="project">
+        update support_project
+        set gmt_create=#{gmtCreate},
+            gmt_modified=#{gmtModified},
+            project_id=#{projectId},
+            project_name= #{projectName},
+            project_info=#{info},
+            project_begin_time=#{beginTime},
+            project_end_time= #{endTime},
+            project_status= #{status},
+            project_importance=#{importance},
+            project_contract_amount=#{contractAmount},
+            project_progress= #{progressValue}
+        where project_id = #{projectId}
+    </update>
+
+    <delete id="deleteProject" parameterType="int">
+        delete
+        from support_project
+        where project_id = #{projectId}
+    </delete>
 
 </mapper>

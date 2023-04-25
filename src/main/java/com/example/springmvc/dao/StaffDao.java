@@ -14,7 +14,7 @@ public interface StaffDao {
     Staff getByStaffId(Integer staffId);
 
     //名字查询
-    Staff getByStaffName(String staffName);
+    List<Staff> getByStaffName(String staffName);
 
     //部门查询
     List<Staff> getByDepartment(String department);

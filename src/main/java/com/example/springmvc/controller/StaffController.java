@@ -28,9 +28,8 @@ public class StaffController {
     }
 
     @GetMapping("/staff/queryStaffByName")
-    public Staff getStaffByName(String staffName){
-        Staff staff = staffService.getByStaffName(staffName);
-        return staff;
+    public List<Staff> getStaffByName(String staffName){
+        return staffService.getByStaffName(staffName);
     }
 
     @GetMapping("/staff/queryStaffByDepartment")
@@ -40,7 +39,11 @@ public class StaffController {
 
     @PostMapping("/staff/insert")
     public int insertStaff(@Validated @RequestBody Staff staff) {
-        return staffService.insertStaff(staff);
+        try {
+            return  staffService.insertStaff(staff);
+        }catch (Exception exception){
+            return 0;
+        }
     }
 
 
